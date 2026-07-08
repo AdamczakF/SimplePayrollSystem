@@ -83,7 +83,7 @@ public class main {
                                             if(userInput.hasNextDouble())
                                             {
                                                 BasePayEmployee basePayEmployee = (BasePayEmployee) employee;
-                                                amountToPay = userInput.nextDouble() * basePayEmployee.getHourlyRate();
+                                                amountToPay = basePayEmployee.calculateEarnings(userInput.nextDouble());
                                             }
                                             else
                                             {
