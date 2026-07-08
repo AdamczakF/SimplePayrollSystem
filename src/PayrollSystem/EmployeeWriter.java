@@ -35,4 +35,43 @@ public class EmployeeWriter {
             throw new NoSuchElementException(EmployeeReader.EMPLOYEES_LIST_EMPTY);
         }
     }
+    public Employee changeEmployeeType(Employee employee, String newType, EmployeeReader reader)
+    {
+        Employee newEmployee = null;
+        int idNumber = employee.getIdNumber();
+        switch(newType)
+        {
+            case "BasePayEmployee":
+            {
+                newEmployee = new BasePayEmployee(employee.getFirstName(), employee.getLastName(), employee.getAge(), Integer.MAX_VALUE-1, employee.getAccountBalance(), 0, reader);
+            }
+            break;
+            case "CommissionPayEmployee":
+            {
+                newEmployee = new CommissionPayEmployee(employee.getFirstName(), employee.getLastName(), employee.getAge(), Integer.MAX_VALUE-1, employee.getAccountBalance(), reader);
+            }
+            break;
+            default:
+            {
+                throw new IllegalArgumentException(Visuals.RED + Visuals.ITALIC + "Employee type \""+ newType + "\" is not recognised." + Visuals.RESET);
+            }
+        }
+        for(int i = 0; i < reader.getEmployees().size(); i++)
+        {
+            if(reader.getEmployees().get(i) == employee)
+            {
+                reader.getEmployees().set(i, newEmployee);
+                break;
+            }
+        }
+        newEmployee.setId(idNumber, reader);
+        return newEmployee;
+    }
+
+    public Employee changeEmployeeType(Employee employee, String newType, EmployeeReader reader, double hourlyRate)
+    {
+        BasePayEmployee newEmployee = (BasePayEmployee) changeEmployeeType(employee, newType, reader);
+        newEmployee.setHourlyRate(hourlyRate);
+        return newEmployee;
+    }
 }

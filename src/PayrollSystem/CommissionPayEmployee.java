@@ -2,6 +2,15 @@ package PayrollSystem;
 
 public class CommissionPayEmployee extends Employee{
 
+    public CommissionPayEmployee()
+    {
+    }
+
+    public CommissionPayEmployee(String firstName, String lastName, int age, int idNumber, double accountBalance, EmployeeReader reader)
+    {
+        super(firstName, lastName, age, idNumber, accountBalance, reader);
+    }
+
     @Override
     public void populateEmployeeFromFile(String[] data, EmployeeReader reader)
     {

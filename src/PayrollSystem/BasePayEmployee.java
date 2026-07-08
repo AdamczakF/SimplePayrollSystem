@@ -4,6 +4,17 @@ public class BasePayEmployee extends Employee{
 
     private double hourlyRate;
 
+    public BasePayEmployee()
+    {
+
+    }
+
+    public BasePayEmployee(String firstName, String lastName, int age, int idNumber, double accountBalance, double hourlyRate, EmployeeReader reader)
+    {
+        super(firstName, lastName, age, idNumber, accountBalance, reader);
+        this.hourlyRate = hourlyRate;
+    }
+
     public double getHourlyRate() {
         return hourlyRate;
     }

@@ -9,7 +9,37 @@ public abstract class Employee {
     private int idNumber;
     private double accountBalance;
 
-    static final String FAILED_EMPLOYEE_UPDATE_MESSAGE = Visuals.RED + Visuals.ITALIC + "Failed to assign %s to %s %s.\nReason: %s\n" + Visuals.RESET;
+    public static final String FAILED_EMPLOYEE_UPDATE_MESSAGE = Visuals.RED + Visuals.ITALIC + "Failed to assign %s to %s %s.\nReason: %s\n" + Visuals.RESET;
+    public static final String SUCCESSFUL_EMPLOYEE_UPDATE_MESSAGE = Visuals.GREEN + "Successfully updated employee details" + Visuals.RESET;
+
+    public Employee()
+    {
+
+    }
+
+    public Employee(String firstName, String lastName, int age, int idNumber, double accountBalance, EmployeeReader reader)
+    {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAge(age);
+        setId(idNumber, reader);
+        setBalance(accountBalance);
+    }
+
+    private boolean isValidName(String name)
+    {
+        boolean valid = (name != null && name.length() <= 20 && !name.isEmpty());
+
+        for(int index = 0; valid && index < name.length(); index++)
+        {
+            char currentChar = name.charAt(index);
+            if((currentChar < 'A' || currentChar > 'z') && currentChar != '\'')
+            {
+                valid = false;
+            }
+        }
+        return valid;
+    }
 
     public String getFirstName()
     {
@@ -31,25 +61,25 @@ public abstract class Employee {
 
     public void setFirstName(String firstName)
     {
-        if(firstName != null && !firstName.isEmpty())
+        if(isValidName(firstName))
         {
             this.firstName = firstName;
         }
         else
         {
-            throw new IllegalArgumentException(String.format(FAILED_EMPLOYEE_UPDATE_MESSAGE, "first name", getFirstName(), getLastName(), "First name cannot be empty"));
+            throw new IllegalArgumentException(String.format(FAILED_EMPLOYEE_UPDATE_MESSAGE, "first name", getFirstName(), getLastName(), "First name cannot be empty and can only contain letters"));
         }
     }
 
     public void setLastName(String lastName)
     {
-        if(lastName != null && !lastName.isEmpty())
+        if(isValidName(lastName))
         {
             this.lastName = lastName;
         }
         else
         {
-            throw new IllegalArgumentException(String.format(FAILED_EMPLOYEE_UPDATE_MESSAGE, "last name", getFirstName(), getLastName(), "Last name cannot be empty"));
+            throw new IllegalArgumentException(String.format(FAILED_EMPLOYEE_UPDATE_MESSAGE, "last name", getFirstName(), getLastName(), "Last name cannot be empty and can only contain letters"));
         }
     }
 
